@@ -17,24 +17,25 @@ export const vaultData = [
       category: "react",
       pinned: true,
       content: `
-      ## React Hooks Overview
-      
-      React Hooks allow you to use state and other features without writing a class.
-      
-      ### 🧠 Common Hooks
-      
-      - \`useState\`
-      - \`useEffect\`
-      - \`useContext\`
-      
-      \`\`\`js
-      const [count, setCount] = useState(0);
-      useEffect(() => {
-        console.log(count);
-      }, [count]);
-      \`\`\`
-      
-      [Learn more about Hooks](https://reactjs.org/docs/hooks-intro.html)
+     \##React Hooks Overview
+
+React Hooks allow you to use state and other features without writing a class.
+
+###🧠Common Hooks
+
+- \`useState\`  
+- \`useEffect\`  
+- \`useContext\`  
+
+\`\`\`js
+const [count, setCount] = useState(0);
+
+useEffect(() => {
+  console.log(count);
+}, [count]);
+\`\`\`
+
+[Learn more about Hooks](https://reactjs.org/docs/hooks-intro.html)
       `
     },
     {

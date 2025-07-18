@@ -64,7 +64,7 @@ export const StarBackground = () => {
       {stars.map((star) => (
         <div
           key={star.id}
-          className="star animate-pulse-subtle"
+          className="star animate-twinkle"
           style={{
             width: star.size + "px",
             height: star.size + "px",
@@ -72,6 +72,7 @@ export const StarBackground = () => {
             top: star.y + "%",
             opacity: star.opacity,
             animationDuration: star.animationDuration + "s",
+            animationDelay: (Math.random() * 4) + 's',
           }}
         />
       ))}
@@ -81,15 +82,51 @@ export const StarBackground = () => {
           key={meteor.id}
           className="meteor animate-meteor"
           style={{
-            width: meteor.size * 50 + "px",
+            width: meteor.size * 80 + "px",
             height: meteor.size * 2 + "px",
             left: meteor.x + "%",
             top: meteor.y + "%",
-            animationDelay: meteor.delay,
+            animationDelay: meteor.delay + 's',
             animationDuration: meteor.animationDuration + "s",
+            transform: 'rotate(-30deg)',
           }}
         />
       ))}
+
+      <style>{`
+        .star {
+          position: absolute;
+          border-radius: 50%;
+          background: white;
+          box-shadow: 0 0 6px 2px #a5b4fc44;
+        }
+        .meteor {
+          position: absolute;
+          border-radius: 9999px;
+          background: linear-gradient(90deg, #a5b4fc 0%, #818cf8 100%);
+          opacity: 0.7;
+          filter: blur(0.5px);
+        }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.7; box-shadow: 0 0 6px 2px #a5b4fc44; }
+          50% { opacity: 1; box-shadow: 0 0 12px 4px #a5b4fc88; }
+        }
+        .animate-twinkle {
+          animation-name: twinkle;
+          animation-iteration-count: infinite;
+          animation-timing-function: ease-in-out;
+        }
+        @keyframes meteor {
+          0% { opacity: 0; transform: translateX(0) translateY(0) rotate(-30deg); }
+          10% { opacity: 1; }
+          100% { opacity: 0; transform: translateX(-300px) translateY(180px) rotate(-30deg); }
+        }
+        .animate-meteor {
+          animation-name: meteor;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+        }
+      `}</style>
     </div>
   );
 };
