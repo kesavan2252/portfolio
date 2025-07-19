@@ -1,6 +1,6 @@
-# 🌌 Kesavanverse Portfolio
+# 🌌 Kesavan's Portfolio
 
-Welcome to **Kesavanverse**, my personal portfolio space crafted with creativity and technical precision. This project showcases my full-stack development skills and aesthetic sensibilities, blending functionality with cosmic themes for a memorable experience.
+Welcome to **Portfolio**, my personal portfolio space crafted with creativity and technical precision. This project showcases my full-stack development skills and aesthetic sensibilities, blending functionality with cosmic themes for a memorable experience.
 
 ## 🚀 Tech Stack
 
