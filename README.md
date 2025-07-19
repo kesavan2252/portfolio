@@ -6,9 +6,9 @@ Welcome to **Kesavanverse**, my personal portfolio space crafted with creativity
 
 - **Frontend**: ReactJS, Material-UI, Formik, Yup
 - **Backend**: Node.js
-- **Database**: MongoDB (local/online), PostgreSQL (exploratory)
+- **Database**: PostgreSQL (local/online)
 - **Deployment & CI/CD**: Docker, GitHub Actions
-- **Styling & Themes**: Tailwind CSS (experiments), Cosmic visuals inspired by spiral galaxies
+- **Styling & Themes**: Tailwind CSS (experiments), Cosmic visuals inspired by galaxies
 - **PWA**: Progressive Web App supported for seamless offline access
 
 ## 💡 Features
