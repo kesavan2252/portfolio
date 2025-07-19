@@ -6,8 +6,12 @@ export const Footer = () => {
       {" "}
       <p className="text-sm text-muted-foreground">
         {" "}
-        &copy; {new Date().getFullYear()} Kesavan_T.co. All rights reserved.
+        &copy; {new Date().getFullYear()} <span >Kesavan_T.co.</span> All rights reserved.
+        <a href="/vault/z" className = "right-2" >
+        @
+        </a>     
       </p>
+         
       <a
         href="#hero"
         className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-colors"
