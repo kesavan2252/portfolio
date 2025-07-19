@@ -181,6 +181,15 @@ export const VaultEditor = () => {
                   <p className="text-xs text-gray-400 mt-1">
                     {entry.date?.toDate?.().toLocaleDateString() || new Date(entry.date).toLocaleDateString()}
                   </p>
+                  {entry.tags && entry.tags.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {entry.tags.map((tag, index) => (
+                        <span key={index} className="text-xs bg-gray-700 text-gray-300 px-2 py-0.5 rounded-full">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div className="flex gap-2">
                   <button

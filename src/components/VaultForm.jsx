@@ -12,7 +12,12 @@ export const VaultForm = ({ initialData, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
     text: "",
     date: "",
+    excerpt: "",
+    tags: "",
+    category: "react",
     content: "",
+    pinned: false,
+    image_url: ""
   });
 
   useEffect(() => {
@@ -20,16 +25,21 @@ export const VaultForm = ({ initialData, onSave, onCancel }) => {
       setFormData({
         text: initialData.text || "",
         date: initialData.date || "",
+        excerpt: initialData.excerpt || "",
+        tags: initialData.tags ? initialData.tags.join(", ") : "",
+        category: initialData.category || "react",
         content: initialData.content || "",
+        pinned: initialData.pinned || false,
+        image_url: initialData.image_url || ""
       });
     }
   }, [initialData]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: type === "checkbox" ? checked : value
     });
   };
 
@@ -42,12 +52,34 @@ export const VaultForm = ({ initialData, onSave, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await onSave(formData);
-    setFormData({
-      text: "",
-      date: "",
-      content: "",
-    });
+    
+    // Convert tags string to array
+    const tagsArray = formData.tags
+      .split(",")
+      .map(tag => tag.trim())
+      .filter(tag => tag !== "");
+    
+    // Prepare the data to be saved
+    const dataToSave = {
+      ...formData,
+      tags: tagsArray
+    };
+
+    await onSave(dataToSave);
+    
+    // Reset form only if not editing
+    if (!initialData) {
+      setFormData({
+        text: "",
+        date: "",
+        excerpt: "",
+        tags: "",
+        category: "react",
+        content: "",
+        pinned: false,
+        image_url: ""
+      });
+    }
   };
 
   const markdownComponents = {
@@ -93,7 +125,7 @@ export const VaultForm = ({ initialData, onSave, onCancel }) => {
     >
       <div className="grid md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">Title</label>
+          <label className="block text-sm font-medium text-gray-300 mb-1">Title*</label>
           <input
             type="text"
             name="text"
@@ -104,7 +136,7 @@ export const VaultForm = ({ initialData, onSave, onCancel }) => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">Date</label>
+          <label className="block text-sm font-medium text-gray-300 mb-1">Date*</label>
           <input
             type="date"
             name="date"
@@ -116,8 +148,72 @@ export const VaultForm = ({ initialData, onSave, onCancel }) => {
         </div>
       </div>
 
+      <div className="grid md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-1">Excerpt</label>
+          <input
+            type="text"
+            name="excerpt"
+            value={formData.excerpt}
+            onChange={handleChange}
+            className="w-full bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-1">Tags* (comma separated)</label>
+          <input
+            type="text"
+            name="tags"
+            value={formData.tags}
+            onChange={handleChange}
+            required
+            className="w-full bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
+            placeholder="e.g. react, javascript, web"
+          />
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-1">Category</label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            className="w-full bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
+          >
+            <option value="react">React</option>
+            <option value="javascript">JavaScript</option>
+            <option value="web">Web</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-1">Image URL</label>
+          <input
+            type="text"
+            name="image_url"
+            value={formData.image_url}
+            onChange={handleChange}
+            className="w-full bg-gray-700 text-white px-3 py-2 rounded border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
+            placeholder="Optional image URL"
+          />
+        </div>
+      </div>
+
+      <div className="flex items-center">
+        <input
+          type="checkbox"
+          name="pinned"
+          checked={formData.pinned}
+          onChange={handleChange}
+          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded"
+        />
+        <label className="ml-2 block text-sm text-gray-300">Pin this entry</label>
+      </div>
+
       <div>
-        <label className="block text-sm font-medium text-gray-300 mb-1">Content</label>
+        <label className="block text-sm font-medium text-gray-300 mb-1">Content*</label>
         <MdEditor
           value={formData.content}
           style={{ height: "300px", background: "#1e1e2e", color: "white" }}
@@ -161,7 +257,12 @@ VaultForm.propTypes = {
   initialData: PropTypes.shape({
     text: PropTypes.string,
     date: PropTypes.string,
+    excerpt: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    category: PropTypes.string,
     content: PropTypes.string,
+    pinned: PropTypes.bool,
+    image_url: PropTypes.string
   }),
   onSave: PropTypes.func.isRequired,
   onCancel: PropTypes.func,
